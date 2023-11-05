@@ -1,8 +1,8 @@
 name: Assignment number One DevOps University Course
 on: push
-env:
-  docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
-  docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
+#env:
+  #  docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #  docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
 jobs:
   Clone-down:
     name: Clone down repo
