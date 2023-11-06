@@ -32,8 +32,6 @@ jobs:
           name: code
           path: .
       - name: Build docker image
-        run: docker build -t assignmentdevops ./src
-      - name: Login again
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} docker.io
+        run: docker build -t assignmentdevops ./srcs
       - name: Publish to DockerHub
-        run: docker push assignmentdevops:latest
+        run: docker push imyordanov/assignmentdevops:latest
