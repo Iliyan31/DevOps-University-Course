@@ -34,4 +34,5 @@ jobs:
       - name: Build docker image
         run: docker build -t assignmentdevops ./src
       - name: Publish to DockerHub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} docker.io
         run: docker push assignmentdevops:latest
