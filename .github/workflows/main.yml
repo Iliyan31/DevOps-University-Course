@@ -6,47 +6,47 @@ on:
   #  docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
   #  docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
 jobs:
-  Scan-with-Sonarcloud-the-code:
-    name: SonarCloud scan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  # Scan-with-Sonarcloud-the-code:
+  #   name: SonarCloud scan
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0  
+  #     - name: SonarCloud Scan
+  #       uses: SonarSource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  Snyk-code-scan:
-    #needs: Scan-with-Sonarcloud-the-code
-    name: Snyk example
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python@master
-        with:
-          python-version: '3.10'
-          args: ${{ github.workspace }}/src
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  # Snyk-code-scan:
+  #   #needs: Scan-with-Sonarcloud-the-code
+  #   name: Snyk example
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@master
+  #     - name: Run Snyk to check for vulnerabilities
+  #       uses: snyk/actions/python@master
+  #       with:
+  #         python-version: '3.10'
+  #         args: ${{ github.workspace }}/src
+  #       env:
+  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       
 
-  Clone-down:
-    needs: Scan-with-Sonarcloud-the-code
-    #needs: Snyk-code-scan
-    name: Clone down repo
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout new repository 
-      uses: actions/checkout@v3
-    - name: Upload the new repository
-      uses: actions/upload-artifact@v3
-      with:
-        name: code
-        path: .
+  # Clone-down:
+  #   needs: Scan-with-Sonarcloud-the-code
+  #   #needs: Snyk-code-scan
+  #   name: Clone down repo
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout new repository 
+  #     uses: actions/checkout@v3
+  #   - name: Upload the new repository
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: code
+  #       path: .
 
   Publish-Docker-image:
     name: Publish the docker image
@@ -73,3 +73,20 @@ jobs:
       
       - name: Publish to DockerHub
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/assignmentdevops
+
+  Trivy-scan:
+    needs: Publish-Docker-image
+    name: Trivy scan
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH,MEDIUM,LOW'
