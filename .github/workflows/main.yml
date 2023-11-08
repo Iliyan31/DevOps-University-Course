@@ -19,21 +19,6 @@ jobs:
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
   #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  # Snyk-code-scan:
-  #   #needs: Scan-with-Sonarcloud-the-code
-  #   name: Snyk example
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@master
-  #     - name: Run Snyk to check for vulnerabilities
-  #       uses: snyk/actions/python@master
-  #       with:
-  #         python-version: '3.10'
-  #         args: ${{ github.workspace }}/src
-  #       env:
-  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      
-
   Clone-down:
     #needs: Scan-with-Sonarcloud-the-code
     #needs: Snyk-code-scan
@@ -48,9 +33,23 @@ jobs:
         name: code
         path: .
 
+  Snyk-code-scan:
+    needs: Clone-down
+    name: Snyk example
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python@master
+        with:
+          python-version: '3.10'
+          args: ${{ github.workspace }}/src
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
   Publish-Docker-image:
     name: Publish the docker image
-    needs: Clone-down
+    needs: Snyk-code-scan
     runs-on: ubuntu-latest
     steps:
       - name: Login to DockerHub
