@@ -20,24 +20,22 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Snyk-code-scan:
-    needs: Scan-with-Sonarcloud-the-code
+    #needs: Scan-with-Sonarcloud-the-code
     name: Snyk example
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@master
-        - uses: snyk/actions/setup@master
-        - uses: actions/setup-python@v4
-          with:
-            python-version: '3.10'
-            args: ${{ github.workspace }}/src/Dockerfile
-        - name: Snyk monitor
-          run: snyk test
-          env:
-            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python@master
+        with:
+          args: ${{ github.workspace }}/src
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       
 
   Clone-down:
-    needs: Snyk-code-scan
+    needs: Scan-with-Sonarcloud-the-code
+    #needs: Snyk-code-scan
     name: Clone down repo
     runs-on: ubuntu-latest
     steps:
