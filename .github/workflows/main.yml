@@ -19,22 +19,8 @@ jobs:
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
   #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  Clone-down:
-    #needs: Scan-with-Sonarcloud-the-code
-    #needs: Snyk-code-scan
-    name: Clone down repo
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout new repository 
-      uses: actions/checkout@v3
-    - name: Upload the new repository
-      uses: actions/upload-artifact@v3
-      with:
-        name: code
-        path: .
-
   Snyk-code-scan:
-    needs: Clone-down
+    #needs: Clone-down
     name: Snyk example
     runs-on: ubuntu-latest
     steps:
@@ -47,9 +33,23 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+  Clone-down:
+    #needs: Scan-with-Sonarcloud-the-code
+    needs: Snyk-code-scan
+    name: Clone down repo
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout new repository 
+      uses: actions/checkout@v3
+    - name: Upload the new repository
+      uses: actions/upload-artifact@v3
+      with:
+        name: code
+        path: .
+
   Publish-Docker-image:
     name: Publish the docker image
-    needs: Snyk-code-scan
+    needs: Clone-down
     runs-on: ubuntu-latest
     steps:
       - name: Login to DockerHub
