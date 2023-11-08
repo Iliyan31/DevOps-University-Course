@@ -26,7 +26,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
-        run: snyk monitor --prune-repeated-subdependencies
         uses: snyk/actions/python@master
         with:
           args: ${{ github.workspace }}/src
