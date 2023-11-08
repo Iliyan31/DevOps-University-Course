@@ -50,7 +50,7 @@ jobs:
 
   Publish-Docker-image:
     name: Publish the docker image
-    #needs: Clone-down
+    needs: Clone-down
     runs-on: ubuntu-latest
     steps:
       - name: Login to DockerHub
