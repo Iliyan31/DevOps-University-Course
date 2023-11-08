@@ -89,4 +89,4 @@ jobs:
         format: 'template'
         template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
-        severity: 'CRITICAL,HIGH,MEDIUM,LOW'
+        severity: 'CRITICAL,HIGH'
