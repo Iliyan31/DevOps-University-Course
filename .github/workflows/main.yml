@@ -18,6 +18,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+   Snyk-code-scan: 
+    name: Snyk example
+    security:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@master
+        - uses: snyk/actions/setup@master
+        - uses: actions/setup-python@v4
+          with:
+            python-version: '3.10'
+            args: ${{ github.workspace }}/src
+        - name: Snyk monitor
+          run: snyk test
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
   Clone-down:
     needs: Scan-with-Sonarcloud-the-code
     name: Clone down repo
