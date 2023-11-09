@@ -3,9 +3,11 @@ from flask import Flask
 app = Flask(__name__)
 str = "Hello! I am a Flask application running on {}"
 
+
 @app.route('/')
 def hello_world():
     return str.format(socket.gethostname())
+
 
 if __name__ == '__main__':
     # Note the extra host argument. If we didn't have it, our Flask app
