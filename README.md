@@ -27,5 +27,21 @@ python3 src/app.py
 - Scan the built Docker image with Trivy as part of the existing workflow
 - Implement a new GitHub workflow with SonarCloud at Merge Request
 
+### Style 
+- Add a license
+- Add an .editorconfig
+- Add a branching strategy (Contributors guide)
+- Check code style & lint with `flake8`
+- Check .editorconfig with `editorconfig-checker`
+- Check makrdown files ([markdownlint-cli](https://www.npmjs.com/package/cli-markdown))
+
+### Unit tests and database migrations
+- Run unit tests (`python3 -m unittest src/app_test.py`)
+- Check for database migrations
+- Check for hardcoded secrets ([gitleaks](https://github.com/gitleaks/gitleaks))
+- Run checks in parallel
+- Implement job dependency
+- Practice PR - see results
+
 ### Bonus
 - Optimize the size of the Docker image. Use a more minimal base image.
