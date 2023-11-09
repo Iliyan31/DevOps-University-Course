@@ -4,8 +4,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return "Hello! I am a Flask application running on {}".format(socket.gethostname())
-
+    return "Hello! I am a Flask application running on {}"
+    .format(socket.gethostname())
 
 if __name__ == '__main__':
     # Note the extra host argument. If we didn't have it, our Flask app
