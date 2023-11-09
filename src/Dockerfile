@@ -1,9 +1,9 @@
 # The base image
-FROM ubuntu:mantic-20231011
+FROM alpine:latest
 
 # Install python and pip
-RUN apt-get update -y
-RUN apt-get install -y python3 python3-pip python3-dev build-essential
+RUN apk update
+RUN apk add python3 py3-pip python3-dev build-base
 
 # Install Python modules needed by the Python app
 COPY requirements.txt /usr/src/app/

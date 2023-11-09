@@ -7,7 +7,7 @@ on:
   #  docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
 jobs:
   flake8_py3:
-    runs-on: ubuntu-latest
+    runs-on: alpine-latest
     steps:
       - name: Setup Python
         uses: actions/setup-python@v1
@@ -27,7 +27,7 @@ jobs:
 
   Scan-with-Sonarcloud-the-code:
     name: SonarCloud scan
-    runs-on: ubuntu-latest
+    runs-on: apline-latest
     steps:
       - uses: actions/checkout@v3
         with:
@@ -40,7 +40,7 @@ jobs:
 
   Snyk-code-scan:
     name: Snyk can for vulnerabilities
-    runs-on: ubuntu-latest
+    runs-on: apline-latest
     steps:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
@@ -52,7 +52,7 @@ jobs:
 
   Clone-down:
     name: Clone down repo
-    runs-on: ubuntu-latest
+    runs-on: apline-latest
     steps:
     - name: Checkout new repository 
       uses: actions/checkout@v3
@@ -65,7 +65,7 @@ jobs:
   Publish-Docker-image:
     name: Publish the docker image
     needs: Clone-down
-    runs-on: ubuntu-latest
+    runs-on: apline-latest
     steps:
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -91,7 +91,7 @@ jobs:
   Trivy-scan:
     needs: Publish-Docker-image
     name: Trivy scan
-    runs-on: ubuntu-latest
+    runs-on: apline-latest
     steps:
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
