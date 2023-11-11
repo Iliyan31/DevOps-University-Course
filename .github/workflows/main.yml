@@ -1,5 +1,5 @@
 name: Assignment number One DevOps University Course
-on: 
+on:
   push:
     branches: [ main ]
 #env:
@@ -43,7 +43,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: editorconfig-checker/action-editorconfig-checker@main
-    - run: editorconfig-checker                
+    - run: editorconfig-checker
 
   Scan-with-Sonarcloud-the-code:
     name: SonarCloud scan
@@ -51,11 +51,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  
+          fetch-depth: 0
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Snyk-code-scan:
@@ -74,7 +74,7 @@ jobs:
     name: Clone down repo
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout new repository 
+    - name: Checkout new repository
       uses: actions/checkout@v3
     - name: Upload the new repository
       uses: actions/upload-artifact@v3
@@ -92,10 +92,8 @@ jobs:
       with:
         name: code
         path: .
-          
     - name: Build docker image
       run: docker build -t assignmentdevops ./src
-      
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
@@ -118,18 +116,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Download repo
         uses: actions/download-artifact@v3
         with:
           name: code
           path: .
-
       - name: Build docker image
         run: docker build -t assignmentdevops ./src
-
       - name: Add tag to docker image
         run: docker tag assignmentdevops ${{ secrets.DOCKERHUB_USERNAME }}/assignmentdevops
-      
       - name: Publish to DockerHub
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/assignmentdevops
