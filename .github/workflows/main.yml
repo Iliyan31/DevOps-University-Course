@@ -81,10 +81,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Download repository
-        uses: actions/download-artifact@v3
-        with:
-          name: code
-          path: .
+      uses: actions/download-artifact@v3
+      with:
+        name: code
+        path: .
           
     - name: Build docker image
       run: docker build -t assignmentdevops ./src
