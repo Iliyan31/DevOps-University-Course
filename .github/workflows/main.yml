@@ -45,6 +45,11 @@ jobs:
     - uses: editorconfig-checker/action-editorconfig-checker@main
     - run: editorconfig-checker
 
+  PY-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - run: python3 -m unittest src/app_test.py
+
   Scan-with-Sonarcloud-the-code:
     name: SonarCloud scan
     runs-on: ubuntu-latest
