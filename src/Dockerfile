@@ -1,5 +1,5 @@
 # The base image
-FROM ubuntu:latest
+FROM ubuntu:mantic-20231011
 
 # Install python and pip
 RUN apt-get update -y
