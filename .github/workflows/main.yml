@@ -36,7 +36,14 @@ jobs:
       with:
         rules: '/lint/rules/changelog.js'
         config: '/lint/config/changelog.yml'
-        args: './CHANGELOG.md'          
+        args: './CHANGELOG.md'
+
+   Editorconfig:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: editorconfig-checker/action-editorconfig-checker@main
+      - run: editorconfig-checker                
 
   Scan-with-Sonarcloud-the-code:
     name: SonarCloud scan
