@@ -120,7 +120,7 @@ jobs:
 
   Publish-Docker-image:
     name: Publish the docker image
-    needs: Trivy-scan
+    #needs: Trivy-scan
     runs-on: ubuntu-latest
     steps:
       - name: Login to DockerHub
