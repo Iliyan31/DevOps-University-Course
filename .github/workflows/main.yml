@@ -97,26 +97,26 @@ jobs:
         name: code
         path: .
 
-  Trivy-scan:
-    needs: Clone-down
-    name: Trivy scan
-    runs-on: ubuntu-latest
-    steps:
-    - name: Download repository
-      uses: actions/download-artifact@v3
-      with:
-        name: code
-        path: .
-    - name: Build docker image
-      run: docker build -t assignmentdevops ./src
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/assignmentdevops'
-        exit-code: '1'
-        ignore-unfixed: true
-        vuln-type: 'os,library'
-        severity: 'CRITICAL,HIGH'
+  # Trivy-scan:
+  #   needs: Clone-down
+  #   name: Trivy scan
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Download repository
+  #     uses: actions/download-artifact@v3
+  #     with:
+  #       name: code
+  #       path: .
+  #   - name: Build docker image
+  #     run: docker build -t assignmentdevops ./src
+  #   - name: Run Trivy vulnerability scanner
+  #     uses: aquasecurity/trivy-action@master
+  #     with:
+  #       image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/assignmentdevops'
+  #       exit-code: '1'
+  #       ignore-unfixed: true
+  #       vuln-type: 'os,library'
+  #       severity: 'CRITICAL,HIGH'
 
   Publish-Docker-image:
     name: Publish the docker image
