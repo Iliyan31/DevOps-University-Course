@@ -96,7 +96,7 @@ jobs:
       - name: Snyk Authenticate
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
       - name: Snyk scan project
-        run: snyk code test ${{github.workspace}}/../src 
+        run: snyk code test ../${{github.workspace}}/src 
 
   # Clone-down:
   #   name: Clone down repo
