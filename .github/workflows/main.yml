@@ -55,12 +55,10 @@ jobs:
         python-version: '3.x'
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
+        python3 -m pip install --upgrade pip
         pip install -r ./src/requirements.txt
     - name: Test with pytest
-      run: |
-        pip install pytest pytest-cov
-        pytest ./src/app_test.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+      run: python3 -m unittest src/app_test.py
 
   # Scan-with-Sonarcloud-the-code:
   #   name: SonarCloud scan
