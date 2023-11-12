@@ -120,6 +120,7 @@ jobs:
 
   Publish-Docker-image:
     name: Publish the docker image
+    needs: Clone-down
     #needs: Trivy-scan
     runs-on: ubuntu-latest
     steps:
