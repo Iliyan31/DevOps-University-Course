@@ -6,7 +6,7 @@ on:
   #  docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
   #  docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
 jobs:
-  flake8_py3-check:
+  Flake8-PY3-Check:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Python
@@ -45,20 +45,28 @@ jobs:
     - uses: editorconfig-checker/action-editorconfig-checker@main
     - run: editorconfig-checker
 
-  PY-tests:
+  Python-Unittests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-    - name: Install dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        pip install -r ./src/requirements.txt
-    - name: Test with pytest
-      run: python3 -m unittest ./src/app_test.py
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: pip3 install -r src/requirements.txt
+
+      - name: Run unit tests
+        run: python3 -m unittest src/app_test.py
+
+   Git-Leaks-Scan:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # Scan-with-Sonarcloud-the-code:
   #   name: SonarCloud scan
