@@ -116,9 +116,6 @@ jobs:
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
-        format: 'template'
-        template: '@/contrib/sarif.tpl'
-        output: 'trivy-results.sarif'
         severity: 'CRITICAL,HIGH'
 
   Publish-Docker-image:
