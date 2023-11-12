@@ -56,9 +56,9 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        pip install -r ./src/requirements.txt
+        pip install -r ./src/app/requirements.txt
     - name: Test with pytest
-      run: python3 -m unittest ./src/app_test.py
+      run: python3 -m unittest ./src/app/app_test.py
 
   # Scan-with-Sonarcloud-the-code:
   #   name: SonarCloud scan
