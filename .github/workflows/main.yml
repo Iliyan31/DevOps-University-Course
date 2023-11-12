@@ -93,7 +93,7 @@ jobs:
       - name: Run snyk scan
         working-directory: ${{github.workspace}}/src
         run: |
-            pip3 install -r src/requirements.txt
+            pip3 install -r requirements.txt
             npm install snyk -g
             snyk auth ${{ secrets.SNYK_TOKEN }}
             snyk test
