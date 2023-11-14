@@ -4,40 +4,25 @@ on:
     branches: [ Database-migrations ]
 
 jobs:
-  Flyway-Migrations:
+  test:
     runs-on: ubuntu-latest
-    name: CI flyway DB migration
-    steps:
-      # Checkout the source code
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      # Run database migrations with the public action
-      - name: Check database migrations with DLE
-        uses: postgres-ai/dle-github-action@v0.1.1
-        id: db-migrations
-        with:
-          dbname: test
-          commands: |
-            sqitch deploy
-            echo 'Migration has been completed'
-          download_artifacts: true
-          observation_interval: "10"
-          max_lock_duration: "1"
-          max_duration: "600"
+    services:
+      postgres:
+        image: postgres
         env:
-          DLMC_CI_ENDPOINT: ${{ secrets.DLMC_CI_ENDPOINT }}
-          DLMC_VERIFICATION_TOKEN: ${{ secrets.DLMC_VERIFICATION_TOKEN }}
-
-      # # Download artifacts
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: artifacts
-      #     path: artifacts/*
-      #     if-no-files-found: ignore
-      #   if: always()
-
-      # Show migration summary
-      - name: Get the response status
-        run: echo "${{ steps.db-migrations.outputs.response }}"
+          POSTGRES_DB: db
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+      - uses: joshuaavalon/flyway-action@v3.0.0
+        with:
+          url: jdbc:postgresql://postgres:5432/db
+          user: user
+          password: password
+      - run: echo 'testing'
