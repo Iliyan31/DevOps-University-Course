@@ -31,7 +31,7 @@ jobs:
         with:
           checkName: 'flake8_py3'
         env:
-          GITHUB_TOKEN: ${ github_token }
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   Markdown-Cli-Lint-Check:
     name: Markdown CLI check
@@ -72,8 +72,7 @@ jobs:
       - name: Check for gitleaks
         uses: gitleaks/gitleaks-action@v2
         env:
-          GITHUB_TOKEN: ${ github_token }
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   Python-Unittests:
     name: Run python unittests
