@@ -2,9 +2,11 @@ name: Assignment number One DevOps University Course
 on:
   push:
     branches: [ main ]
-#env:
-  #  docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #  docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+env:
+   docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
+   docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
+
 jobs:
   Flake8-Python3-Check:
     name: Flake8 python scan
