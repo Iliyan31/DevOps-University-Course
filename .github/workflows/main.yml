@@ -1,7 +1,7 @@
 name: Assignment number One DevOps University Course
 on:
   push:
-    branches: [ main ]
+    branches: [ main, Database-migrations ]
 #env:
   #  docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
   #  docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
