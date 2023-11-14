@@ -7,7 +7,7 @@ env:
   docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
   docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
   github_token: ${{ secrets.GITHUB_TOKEN }}
-  gitleaks_license: ${{ secrets.GITLEAKS_LICENSE }}
+  gitleaks_license: ${{ secrets.GITLEAKS_LICENSE}}
 
 jobs:
   Flake8-Python3-Check:
@@ -73,7 +73,7 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${ github_token }
-          GITLEAKS_LICENSE: ${ gitleaks_license }
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE}}
 
   Python-Unittests:
     name: Run python unittests
