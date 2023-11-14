@@ -193,14 +193,14 @@ jobs:
           DLMC_CI_ENDPOINT: ${{ secrets.DLMC_CI_ENDPOINT }}
           DLMC_VERIFICATION_TOKEN: ${{ secrets.DLMC_VERIFICATION_TOKEN }}
 
-      # Download artifacts
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: artifacts
-          path: artifacts/*
-          if-no-files-found: ignore
-        if: always()
+      # # Download artifacts
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: artifacts
+      #     path: artifacts/*
+      #     if-no-files-found: ignore
+      #   if: always()
 
       # Show migration summary
       - name: Get the response status
