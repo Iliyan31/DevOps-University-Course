@@ -110,7 +110,7 @@ jobs:
           url: jdbc:postgresql://postgres:5432/db
           user: user
           password: password
-      
+
       - name: Print completed
         run: echo 'Completed'
 
