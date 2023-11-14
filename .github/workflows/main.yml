@@ -5,9 +5,8 @@ on:
 
 env:
   docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
-  docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
+  docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
   github_token: ${{ secrets.GITHUB_TOKEN }}
-  github_workspace: ${{ github.workspace }}
 
 jobs:
   Flake8-Python3-Check:
@@ -127,7 +126,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run snyk scan
-        working-directory: github_workspace/src
+        working-directory: ${{github.workspace}}/src
         run: |
             pip3 install -r requirements.txt
             npm install snyk -g
