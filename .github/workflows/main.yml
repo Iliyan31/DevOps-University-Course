@@ -125,7 +125,6 @@ jobs:
   #       path: .
 
   Trivy-scan:
-    needs: Clone-down
     name: Trivy scan
     runs-on: ubuntu-latest
     steps:
