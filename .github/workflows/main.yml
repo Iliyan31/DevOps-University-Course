@@ -168,7 +168,6 @@ jobs:
 
   #     - name: Publish to DockerHub
   #       run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/assignmentdevops
-
  Flyway-Migrations:
     runs-on: ubuntu-latest
     name: CI flyway DB migration
@@ -206,4 +205,3 @@ jobs:
       # Show migration summary
       - name: Get the response status
         run: echo "${{ steps.db-migrations.outputs.response }}"
-        
