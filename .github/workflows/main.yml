@@ -4,8 +4,9 @@ on:
     branches: [ main ]
 
 env:
-   docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
-   docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
+  docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
+  docker_password: ${{ secrets.DOCKERHUB_TOKEN }}
+  github_token: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   Flake8-Python3-Check:
@@ -29,7 +30,7 @@ jobs:
         with:
           checkName: 'flake8_py3'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: github_token
 
   Markdown-Cli-Lint-Check:
     name: Markdown CLI check
